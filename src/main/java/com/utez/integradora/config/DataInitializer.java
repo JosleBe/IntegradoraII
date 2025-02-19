@@ -19,12 +19,12 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         UserEntity user = new UserEntity();
-        user.setEmail("test@example.com");
-        user.setPassword(passwordEncoder.encode("test"));
+        user.setEmail("testweb@example.com");
+        user.setPassword(passwordEncoder.encode("testweb"));
         user.setRole("ADMIN");
         user.setName("Leonardo");
         user.setSexo("M");
-        user.setPhone("7775012348");
+        user.setPhone("7775012448");
         user.setLastName("Martinez");
         user.setDireccion("Cuernavca, Morelos");
         user.setFechaNacimiento("2004-10-10");
