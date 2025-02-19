@@ -34,10 +34,11 @@ public class SecurityConfig {
         return httpSecurity.csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests( authorizeRequests ->
-                        authorizeRequests.requestMatchers("/api/auth/**", "/api/campaign/**").permitAll()
+                        authorizeRequests.requestMatchers("/api/auth/**", "/api/campaign/**", "/chat/**", "/topic/**", "/api/chat/**", "/ws/**").permitAll()
                                 /*.requestMatchers("/api/admin/**").hasAnyAuthority("ADMIN")
                                 .requestMatchers("api/user/**").hasAnyAuthority("USER")
-                                .requestMatchers("api/adminuser").hasAnyAuthority("ADMIN", "USER") */
+                                */
+                                .requestMatchers("api/adminuser/**").hasAnyAuthority("ADMIN", "USER")
                                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

@@ -3,9 +3,11 @@ package com.utez.integradora.entity.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.utez.integradora.entity.UserEntity;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 @Setter@Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,11 +25,16 @@ public class ReqRes {
     private String phone;           // Teléfono para autenticación por número
     private String password;        // Contraseña para email/teléfono
     private String facebookToken;   // Token de acceso para autenticación con Facebook
+    private String direccion;
+    private String fecha;
+    private String sexo;
     private UserEntity user;
+    private String fechaNacimiento;
     private List<UserEntity> userEntityList;
 
 
     public ReqRes(int i, String accessTokenIsRequired) {
+
     }
     public ReqRes() {
     }

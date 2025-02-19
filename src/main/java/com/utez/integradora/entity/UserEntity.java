@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 @Entity
 @Table(name = "user")
@@ -28,6 +29,10 @@ public class UserEntity implements UserDetails, Serializable {
     private String password;
     @Column(unique = true)
     private String phone;
+    private String direccion;
+    private String fechaNacimiento;
+    private String sexo;
+    private String sessionId;
     private String role;
 
     @Override
@@ -37,7 +42,7 @@ public class UserEntity implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return email;
+        return this.email;
     }
 
     @Override

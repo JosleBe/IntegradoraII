@@ -6,6 +6,7 @@ import com.utez.integradora.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,11 @@ public class UsersManagementService {
                     .role(reqRes.getRole())
                     .name(reqRes.getName())
                     .password(passwordEncoder.encode(reqRes.getPassword()))
+                    .sexo(reqRes.getSexo())
+                    .phone(reqRes.getPhone())
+                    .direccion(reqRes.getDireccion())
+                    .fechaNacimiento(reqRes.getFecha())
+                    .lastName(reqRes.getLastName())
                     .build();
             UserEntity user = userRepository.save(ourUsers);
             if(user.getId()>0){
@@ -49,11 +55,15 @@ public class UsersManagementService {
     }
 
     public ReqRes login(ReqRes reqRes) {
+        SecurityContextHolder.clearContext();
         ReqRes res = new ReqRes();
+        System.out.println(reqRes.getEmail());
+        System.out.println(reqRes.getPassword());
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken( reqRes.getEmail(), reqRes.getPassword()));
             var user = userRepository.findByEmail(reqRes.getEmail()).orElseThrow();
+
             var jwt = jwtUtils.generateToken(user);
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
             res.setStatusCode(200);
@@ -72,6 +82,7 @@ public class UsersManagementService {
         ReqRes res = new ReqRes();
         try {
             String ourEmail = jwtUtils.extractUsername(reqRes.getToken());
+            System.out.println(ourEmail);
             UserEntity ourUser = userRepository.findByEmail(ourEmail).orElseThrow();
             if (jwtUtils.isTokenValid(reqRes.getToken(), ourUser)) {
                 var jwt = jwtUtils.generateToken(ourUser);
@@ -142,18 +153,27 @@ public class UsersManagementService {
     }
 
     public ReqRes updateUser(Integer id , ReqRes updatedUser) {
+        updatedUser.setPassword("");
         ReqRes res = new ReqRes();
         try {
             Optional<UserEntity> user = userRepository.findById(id);
+
             if (user.isPresent()) {
                 UserEntity ourUser = user.get(); //Asociar a un nuevo objeto
-                ourUser.setEmail(updatedUser.getEmail());
+                System.out.println(ourUser.getPassword());
                 ourUser.setRole(updatedUser.getRole());
                 ourUser.setName(updatedUser.getName());
+                ourUser.setDireccion(updatedUser.getDireccion());
+                ourUser.setSexo(updatedUser.getSexo());
+                ourUser.setPhone(updatedUser.getPhone());
+                ourUser.setLastName(updatedUser.getLastName());
+                ourUser.setFechaNacimiento(updatedUser.getFechaNacimiento());
                 if(updatedUser.getPassword()!=null && !updatedUser.getPassword().isEmpty()){
                     ourUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+
                 }
                 UserEntity ourUsers = userRepository.save(ourUser);
+                System.out.println(ourUsers.getPassword());
                 res.setStatusCode(200);
                 res.setUser(ourUsers);
                 res.setMessage("User successfully updated!");

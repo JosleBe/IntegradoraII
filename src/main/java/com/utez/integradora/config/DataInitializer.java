@@ -7,6 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 @RequiredArgsConstructor
 
@@ -21,6 +23,11 @@ public class DataInitializer implements CommandLineRunner {
         user.setPassword(passwordEncoder.encode("test"));
         user.setRole("ADMIN");
         user.setName("Leonardo");
+        user.setSexo("M");
+        user.setPhone("7775012348");
+        user.setLastName("Martinez");
+        user.setDireccion("Cuernavca, Morelos");
+        user.setFechaNacimiento("2004-10-10");
         userRepository.save(user);
     }
 }

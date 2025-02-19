@@ -23,7 +23,7 @@ public class UserController {
     public ResponseEntity<ReqRes> getUser(@PathVariable Integer id) {
         return ResponseEntity.ok(usersManagementService.getUserById(id));
     }
-    @GetMapping("/admin/update/{id}")
+    @PutMapping("/admin/update/{id}")
     public ResponseEntity<ReqRes> updateUser(@PathVariable Integer id, @RequestBody ReqRes reqRes ) {
         return ResponseEntity.ok(usersManagementService.updateUser(id, reqRes));
     }
