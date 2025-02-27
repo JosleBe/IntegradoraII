@@ -36,6 +36,4 @@ public class UserAuthController {
     public ResponseEntity<ReqRes> refresh(@RequestBody ReqRes reqRes ) {
         return ResponseEntity.ok(usersManagementService.refreshToken(reqRes));
     }
-
-   
 }

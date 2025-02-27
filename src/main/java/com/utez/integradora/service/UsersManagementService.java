@@ -208,4 +208,18 @@ public class UsersManagementService {
         }
         return res;
     }
+
+    public Optional<UserEntity> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void changePassword(UserEntity user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
+    public boolean checkPassword(UserEntity user, String password) {
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
 }

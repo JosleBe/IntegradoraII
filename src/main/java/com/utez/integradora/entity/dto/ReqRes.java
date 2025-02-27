@@ -31,6 +31,7 @@ public class ReqRes {
     private UserEntity user;
     private String fechaNacimiento;
     private List<UserEntity> userEntityList;
+    private String newPassword;
 
 
     public ReqRes(int i, String accessTokenIsRequired) {
